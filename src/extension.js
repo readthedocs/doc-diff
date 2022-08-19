@@ -1,5 +1,7 @@
 import { visualDomDiff } from "visual-dom-diff";
 
+import styles from "./styles.css";
+
 /**
  * visual-dom-diff options
  *
@@ -124,7 +126,10 @@ export function compare(config) {
           reject(new Error("Element not found in both documents."));
         }
 
-        const diffNode = visualDomDiff(old_body, new_body, VISUAL_DIFF_OPTIONS);
+        // Conditionally inject our base styles
+        if (config.inject_styles) {
+          document.adoptedStyleSheets = [styles];
+        }
 
         // After finding the root element, and diffing it, replace it in the DOM
         // with the resulting visual diff elements instead.

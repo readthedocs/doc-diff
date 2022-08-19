@@ -30,6 +30,15 @@ module.exports = (env, argv) => {
             },
           },
         },
+        {
+          test: /\.css$/,
+          use: {
+            loader: "css-loader",
+            options: {
+              exportType: "css-style-sheet",
+            },
+          }
+        },
       ],
     },
     plugins: [],
