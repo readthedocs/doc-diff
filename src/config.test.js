@@ -87,4 +87,46 @@ describe("Configuration loading", () => {
       });
     });
   });
+
+  test("From both custom and READTHEDOCS_DATA scripts", () => {
+    expect(document).toBeDefined();
+
+    const configs = [
+      {
+        id: "READTHEDOCS_DATA",
+        data: {
+          version: "devel",
+          language: "de",
+          page: "guides/shrug",
+        }
+      },
+      {
+        id: "readthedocs-diff-config",
+        data: {
+          base_url: "/ja/latest/index.html",
+          inject_styles: false
+        }
+      }
+    ];
+
+    for (const config of configs) {
+      const config_element = document.createElement("script");
+      config_element.setAttribute("type", "application/json");
+      config_element.setAttribute("id", config.id);
+      config_element.innerText = JSON.stringify(config.data);
+      document.head.appendChild(config_element);
+    }
+
+    return load_configuration().then((config) => {
+      expect(config).toBeDefined();
+      expect(config).toHaveProperty("base_url");
+      expect(config).toHaveProperty("root_selector");
+      expect(config).toHaveProperty("inject_styles");
+      expect(config).toMatchObject({
+        base_url: "/ja/latest/index.html",
+        root_selector: "div.document[role='main']",
+        inject_styles: false,
+      });
+    });
+  });
 });
