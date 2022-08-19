@@ -1,14 +1,14 @@
-.readthedocs-diff-added {
+.doc-diff-added {
   background-color: rgb(171, 242, 188);
   text-decoration: none;
 }
 
-.readthedocs-diff-modified {
+.doc-diff-modified {
   background-color: gold;
   text-decoration: none;
 }
 
-.readthedocs-diff-removed {
+.doc-diff-removed {
   background-color: rgba(255, 129, 130, 0.4);
   text-decoration: none;
 }

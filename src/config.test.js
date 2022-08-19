@@ -23,7 +23,7 @@ describe("Configuration loading", () => {
     };
     const config_element = document.createElement("script");
     config_element.setAttribute("type", "application/json");
-    config_element.setAttribute("id", "readthedocs-diff-config");
+    config_element.setAttribute("id", "doc-diff-config");
     config_element.innerText = JSON.stringify(config);
     document.head.appendChild(config_element);
 
@@ -101,7 +101,7 @@ describe("Configuration loading", () => {
         },
       },
       {
-        id: "readthedocs-diff-config",
+        id: "doc-diff-config",
         data: {
           base_url: "/ja/latest/index.html",
           inject_styles: false,

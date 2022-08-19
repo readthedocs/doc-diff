@@ -7,7 +7,7 @@ module.exports = (env, argv) => {
 
   return {
     entry: {
-      "readthedocs-diff": ["./src/index.js"],
+      "readthedocs-doc-diff": ["./src/index.js"],
     },
     output: {
       filename: "[name].js?[fullhash]",

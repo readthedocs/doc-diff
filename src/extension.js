@@ -8,9 +8,9 @@ import styles from "./styles.css";
  * See https://github.com/Teamwork/visual-dom-diff#options
  */
 const VISUAL_DIFF_OPTIONS = {
-  addedClass: "readthedocs-diff-added",
-  modifiedClass: "readthedocs-diff-modified",
-  removedClass: "readthedocs-diff-removed",
+  addedClass: "doc-diff-added",
+  modifiedClass: "doc-diff-modified",
+  removedClass: "doc-diff-removed",
   skipModified: false,
 };
 
@@ -86,9 +86,7 @@ export function load_configuration() {
     }
 
     // Next load custom configuration for overrides
-    const config_element = document.querySelector(
-      "script#readthedocs-diff-config"
-    );
+    const config_element = document.querySelector("script#doc-diff-config");
     if (config_element) {
       try {
         const custom_config = JSON.parse(config_element.innerText);

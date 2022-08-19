@@ -1,8 +1,8 @@
 {
-  "name": "readthedocs-diff",
+  "name": "readthedocs-doc-diff",
   "version": "1.0.0",
-  "description": "Read the Docs build visual diff extension",
-  "main": "dist/readthedocs-diff.js",
+  "description": "Read the Docs doc visual diff extension",
+  "main": "dist/readthedocs-doc-diff.js",
   "engines": {
     "node": ">=16.0.0",
     "npm": ">=7.0.0"
