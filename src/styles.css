@@ -1,17 +1,14 @@
 .readthedocs-diff-added {
-  border-bottom: 0.2em solid green;
-  color: green;
+  background-color: rgb(171, 242, 188);
   text-decoration: none;
 }
 
 .readthedocs-diff-modified {
-  border-bottom: 0.2em solid gold;
-  color: gold;
+  background-color: gold;
   text-decoration: none;
 }
 
 .readthedocs-diff-removed {
-  border-bottom: 0.2em solid orangered;
-  color: orangered;
+  background-color: rgba(255, 129, 130, 0.4);
   text-decoration: none;
 }
