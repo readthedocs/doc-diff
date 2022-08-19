@@ -19,7 +19,9 @@ Just add this to your documentation output, but only for pull request builds:
 Configuration
 -------------
 
-Configuration can be performed using `<script>` element:
+On Read the Docs, configuration will be automatic, using some data that we
+include on every page. If for some reason you need to override this, custom
+configuration can be performed using `<script>` element:
 
 .. code:: html
 
