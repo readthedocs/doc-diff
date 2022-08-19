@@ -98,15 +98,15 @@ describe("Configuration loading", () => {
           version: "devel",
           language: "de",
           page: "guides/shrug",
-        }
+        },
       },
       {
         id: "readthedocs-diff-config",
         data: {
           base_url: "/ja/latest/index.html",
-          inject_styles: false
-        }
-      }
+          inject_styles: false,
+        },
+      },
     ];
 
     for (const config of configs) {

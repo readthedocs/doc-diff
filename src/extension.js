@@ -25,9 +25,9 @@ const VISUAL_DIFF_OPTIONS = {
 export function load_configuration() {
   // Default config
   let config = {
-      base_url: "/en/latest/index.html",
-      root_selector: "div.document[role='main']",
-      inject_styles: true,
+    base_url: "/en/latest/index.html",
+    root_selector: "div.document[role='main']",
+    inject_styles: true,
   };
 
   return new Promise((resolve, reject) => {

@@ -37,7 +37,7 @@ module.exports = (env, argv) => {
             options: {
               exportType: "css-style-sheet",
             },
-          }
+          },
         },
       ],
     },
