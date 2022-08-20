@@ -60,3 +60,35 @@ disable the `inject_styles` option as well.
 * `.doc-diff-added`
 * `.doc-diff-modified`
 * `.doc-diff-removed`
+
+Contributing
+------------
+
+To work on this repository, we'll require Node.js >= 14.0.0, as other
+repositories still use Node 14 as well. There is nothing requiring a specific
+version otherwise, however.
+
+To perform development on this library:
+
+.. code:: console
+
+    npm run dev
+
+And to build the final asset distributions:
+
+.. code:: console
+
+   npm run build
+
+You'll need to build the assets for each pull request you open, and should have
+linted your code before pull request, using:
+
+.. code:: console
+
+    npm run format
+
+Tests are run with:
+
+.. code:: console
+
+    npm test

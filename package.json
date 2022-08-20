@@ -4,7 +4,7 @@
   "description": "Read the Docs doc visual diff extension",
   "main": "dist/readthedocs-doc-diff.js",
   "engines": {
-    "node": ">=16.0.0",
+    "node": ">=14.0.0",
     "npm": ">=7.0.0"
   },
   "scripts": {
