@@ -1,4 +1,4 @@
-import { load_configuration } from "./extension";
+import { get_base_url, load_configuration } from "./extension";
 
 describe("Configuration loading", () => {
   afterEach(() => {
@@ -8,9 +8,11 @@ describe("Configuration loading", () => {
   test("Default values", () => {
     expect(document).toBeDefined();
     return load_configuration().then((config) => {
-      expect(config).toBeDefined();
-      expect(config).toHaveProperty("base_url");
-      expect(config).toHaveProperty("root_selector");
+      expect(config).toMatchObject({
+        base_version: "latest",
+        base_language: "en",
+        base_page: "index.html",
+      });
     });
   });
 
@@ -18,7 +20,7 @@ describe("Configuration loading", () => {
     expect(document).toBeDefined();
 
     const config = {
-      base_url: "/mocked/en/latest/",
+      base_version: "mocked",
       root_selector: "body",
     };
     const config_element = document.createElement("script");
@@ -28,11 +30,10 @@ describe("Configuration loading", () => {
     document.head.appendChild(config_element);
 
     return load_configuration().then((config) => {
-      expect(config).toBeDefined();
-      expect(config).toHaveProperty("base_url");
-      expect(config).toHaveProperty("root_selector");
       expect(config).toMatchObject({
-        base_url: "/mocked/en/latest/",
+        base_version: "mocked",
+        base_language: "en",
+        base_page: "index.html",
         root_selector: "body",
       });
     });
@@ -45,6 +46,7 @@ describe("Configuration loading", () => {
       version: "devel",
       language: "de",
       page: "changelog",
+      project: "doc-diff",
     };
     const config_element = document.createElement("script");
     config_element.setAttribute("type", "application/json");
@@ -53,11 +55,11 @@ describe("Configuration loading", () => {
     document.head.appendChild(config_element);
 
     return load_configuration().then((config) => {
-      expect(config).toBeDefined();
-      expect(config).toHaveProperty("base_url");
-      expect(config).toHaveProperty("root_selector");
       expect(config).toMatchObject({
-        base_url: "/de/latest/changelog.html",
+        base_version: "latest",
+        base_language: "de",
+        base_host: "https://doc-diff.readthedocs.io",
+        base_page: "changelog.html",
         root_selector: "div.document[role='main']",
       });
     });
@@ -70,6 +72,7 @@ describe("Configuration loading", () => {
       version: "devel",
       language: "de",
       page: "guides/shrug",
+      project: "doc-diff",
     };
     const config_element = document.createElement("script");
     config_element.setAttribute("type", "application/json");
@@ -78,11 +81,11 @@ describe("Configuration loading", () => {
     document.head.appendChild(config_element);
 
     return load_configuration().then((config) => {
-      expect(config).toBeDefined();
-      expect(config).toHaveProperty("base_url");
-      expect(config).toHaveProperty("root_selector");
       expect(config).toMatchObject({
-        base_url: "/de/latest/guides/shrug.html",
+        base_version: "latest",
+        base_language: "de",
+        base_host: "https://doc-diff.readthedocs.io",
+        base_page: "guides/shrug.html",
         root_selector: "div.document[role='main']",
       });
     });
@@ -98,12 +101,13 @@ describe("Configuration loading", () => {
           version: "devel",
           language: "de",
           page: "guides/shrug",
+          project: "doc-diff",
         },
       },
       {
         id: "doc-diff-config",
         data: {
-          base_url: "/ja/latest/index.html",
+          base_language: "ja",
           inject_styles: false,
         },
       },
@@ -118,15 +122,98 @@ describe("Configuration loading", () => {
     }
 
     return load_configuration().then((config) => {
-      expect(config).toBeDefined();
-      expect(config).toHaveProperty("base_url");
-      expect(config).toHaveProperty("root_selector");
-      expect(config).toHaveProperty("inject_styles");
       expect(config).toMatchObject({
-        base_url: "/ja/latest/index.html",
+        base_host: "https://doc-diff.readthedocs.io",
+        base_language: "ja",
+        base_version: "latest",
+        base_page: "guides/shrug.html",
         root_selector: "div.document[role='main']",
         inject_styles: false,
       });
     });
+  });
+
+  test("From both but with base_url override", () => {
+    expect(document).toBeDefined();
+
+    const configs = [
+      {
+        id: "READTHEDOCS_DATA",
+        data: {
+          version: "devel",
+          language: "de",
+          page: "guides/shrug",
+          project: "doc-diff",
+        },
+      },
+      {
+        id: "doc-diff-config",
+        data: {
+          base_url: "/guides/tacos.html",
+          inject_styles: false,
+        },
+      },
+    ];
+
+    for (const config of configs) {
+      const config_element = document.createElement("script");
+      config_element.setAttribute("type", "application/json");
+      config_element.setAttribute("id", config.id);
+      config_element.innerText = JSON.stringify(config.data);
+      document.head.appendChild(config_element);
+    }
+
+    return load_configuration().then((config) => {
+      expect(config).toMatchObject({
+        base_host: "https://doc-diff.readthedocs.io",
+        base_language: "de",
+        base_version: "latest",
+        base_page: "guides/shrug.html",
+        base_url: "/guides/tacos.html",
+        root_selector: "div.document[role='main']",
+        inject_styles: false,
+      });
+    });
+  });
+});
+
+describe("Base URL generation", () => {
+  test("With everything", () => {
+    expect(
+      get_base_url(
+        "https://doc-diff.readthedocs.io",
+        "en",
+        "latest",
+        "guides/shrug.html"
+      )
+    ).toBe("https://doc-diff.readthedocs.io/en/latest/guides/shrug.html");
+  });
+
+  test("Without a language", () => {
+    expect(
+      get_base_url(
+        "https://doc-diff.readthedocs.io",
+        null,
+        "latest",
+        "guides/shrug.html"
+      )
+    ).toBe("https://doc-diff.readthedocs.io/latest/guides/shrug.html");
+  });
+
+  test("Without a language or version", () => {
+    expect(
+      get_base_url(
+        "https://doc-diff.readthedocs.io",
+        null,
+        null,
+        "guides/shrug.html"
+      )
+    ).toBe("https://doc-diff.readthedocs.io/guides/shrug.html");
+  });
+
+  test("Without a host", () => {
+    expect(get_base_url(null, "en", "latest", "guides/shrug.html")).toBe(
+      "/en/latest/guides/shrug.html"
+    );
   });
 });

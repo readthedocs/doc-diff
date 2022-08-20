@@ -11,7 +11,7 @@ const VISUAL_DIFF_OPTIONS = {
   addedClass: "doc-diff-added",
   modifiedClass: "doc-diff-modified",
   removedClass: "doc-diff-removed",
-  skipModified: false,
+  skipModified: true,
 };
 
 /**
@@ -25,13 +25,16 @@ const VISUAL_DIFF_OPTIONS = {
 export function load_configuration() {
   // Default config
   let config = {
-    base_url: "/en/latest/index.html",
+    base_host: "",
+    base_version: "latest",
+    base_language: "en",
+    base_page: "index.html",
     root_selector: "div.document[role='main']",
     inject_styles: true,
   };
 
   return new Promise((resolve, reject) => {
-    /**
+    /*
      * First try script#READTHEDOCS_DATA element, specific to Read the Docs
      *
      * This data looks like:
@@ -66,20 +69,13 @@ export function load_configuration() {
     if (rtd_config_element) {
       try {
         const rtd_config = JSON.parse(rtd_config_element.innerText);
-        // TODO hrm, this is slightly jankier than imaginged. I suppose this
-        // needs some extra configuration passed from the build.
-        const url_parts = [
-          "",
-          rtd_config.language,
-          "latest", // TODO don't hardcode this? We need the PR base though
-          rtd_config.page + ".html",
-        ];
-        // TODO configure root selector based on theme and/or builder?
 
-        Object.assign(config, {
-          base_url: url_parts.join("/"),
-          root_selector: "div.document[role='main']",
-        });
+        // TODO we need a programmatic way to do this, this is a hack
+        config.base_host = "https://" + rtd_config.project + ".readthedocs.io";
+        config.base_language = rtd_config.language;
+        config.base_page = rtd_config.page + ".html";
+        // TODO configure root selector based on theme and/or builder?
+        // config.root_selector: "div.document[role='main']",
       } catch (err) {
         console.debug("Error parsing configuration data", err);
       }
@@ -96,8 +92,43 @@ export function load_configuration() {
       }
     }
 
+    if (config.base_url === undefined) {
+      config.base_url = get_base_url(
+        config.base_host,
+        config.base_language,
+        config.base_version,
+        config.base_page
+      );
+    }
+
     return resolve(config);
   });
+}
+
+/**
+ * Get the URL of the base document to fetch and compare against
+ *
+ * This is constructed from several configuration options by default.
+ *
+ * @param {string} host - Host name part of the base URL
+ * @parma {string} page - Page part of the base URL
+ * @param {string} [version="latest"] - Base version to compare against
+ * @param {string} [language="en"] - Base language to compare against
+ */
+export function get_base_url(host, language = "en", version = "latest", page) {
+  let parts = [];
+
+  // Single version
+  if (version == null && language == null) {
+    parts = [host, page];
+  }
+  // Only version, not really supported, but hey
+  else if (language == null) {
+    parts = [host, version, page];
+  } else {
+    parts = [host, language, version, page];
+  }
+  return parts.join("/");
 }
 
 /**

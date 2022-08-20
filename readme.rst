@@ -34,16 +34,22 @@ configuration can be performed using `<script>` element:
 Options
 ~~~~~~~
 
-base_url
-    Base URL to diff against.
+base_version
+    The base version to use when constructing a URL for the diff base.
 
-    Default: `/en/latest/<page name>`
+    Default: `latest`
 
 inject_styles
     Automatically inject basic stylesheets for the diff elements. See `Styling`_
     below for information on how to style these yourself.
 
     Default: `true`
+
+root_selector
+    The root element to compare on both documents. This is a Sphinx specific
+    node by default.
+
+    Default: `div.document[role='main']`
 
 Styling
 -------
