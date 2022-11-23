@@ -116,7 +116,8 @@ export function load_configuration() {
  * @param {string} [language="en"] - Base language to compare against
  */
 export function get_base_url(host, language = "en", version = "latest", page) {
-  let parts = [];
+  // Hack a CORS Proxy for now to get around CORS issues
+  let parts = ['https://cors.writethedocs.workers.dev/corsproxy/?apiurl='];
 
   // Single version
   if (version == null && language == null) {
