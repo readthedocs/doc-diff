@@ -117,7 +117,7 @@ export function load_configuration() {
  */
 export function get_base_url(host, language = "en", version = "latest", page) {
   // Hack a CORS Proxy for now to get around CORS issues
-  let parts = ['https://cors.writethedocs.workers.dev/corsproxy/?apiurl='];
+  let parts = ['https://cors.readthedocs.workers.dev//corsproxy/?apiurl='];
 
   // Single version
   if (version == null && language == null) {
