@@ -13,6 +13,9 @@ module.exports = (env, argv) => {
       filename: "[name].js?[fullhash]",
       chunkFilename: "[name].js?[chunkhash]",
       path: path.join(__dirname, "dist"),
+      library: {
+        type: "umd",
+      },
     },
     optimization: {
       minimize: is_production,
