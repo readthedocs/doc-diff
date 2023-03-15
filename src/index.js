@@ -1,4 +1,4 @@
-import { setup } from "./extension";
+import { setup, compare } from "./extension";
 
 /**
  * Automatically set this up if it is included via `<script>`
@@ -9,3 +9,5 @@ import { setup } from "./extension";
 if (require.main !== module) {
   setup();
 }
+
+export { compare };
