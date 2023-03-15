@@ -9,3 +9,5 @@ import { setup } from "./extension";
 if (require.main !== module) {
   setup();
 }
+
+export { setup };
