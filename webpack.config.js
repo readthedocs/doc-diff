@@ -15,7 +15,6 @@ module.exports = (env, argv) => {
       path: path.join(__dirname, "dist"),
       globalObject: "this",
       library: {
-          name: "docdiff",
           type: "umd",
       },
     },
