@@ -13,9 +13,10 @@ module.exports = (env, argv) => {
       filename: "[name].js?[fullhash]",
       chunkFilename: "[name].js?[chunkhash]",
       path: path.join(__dirname, "dist"),
+      globalObject: "this",
       library: {
-        name: "doc-diff",
-        type: "umd",
+          name: "docdiff",
+          type: "umd",
       },
     },
     optimization: {

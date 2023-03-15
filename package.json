@@ -2,7 +2,7 @@
   "name": "readthedocs-doc-diff",
   "version": "1.0.0",
   "description": "Read the Docs doc visual diff extension",
-  "main": "dist/readthedocs-doc-diff.js",
+  "module": "dist/readthedocs-doc-diff.js",
   "engines": {
     "node": ">=14.0.0",
     "npm": ">=7.0.0"
