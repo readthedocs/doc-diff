@@ -2,10 +2,10 @@
   "name": "readthedocs-doc-diff",
   "version": "1.0.0",
   "description": "Read the Docs doc visual diff extension",
-  "main": "dist/readthedocs-doc-diff.js",
+  "main": "dist/doc-diff.js",
   "engines": {
-    "node": ">=14.0.0",
-    "npm": ">=7.0.0"
+    "node": "^14.0.0",
+    "npm": "^7.0.0"
   },
   "scripts": {
     "build": "webpack --mode=production --progress",

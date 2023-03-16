@@ -7,7 +7,10 @@ module.exports = (env, argv) => {
 
   return {
     entry: {
-      "readthedocs-doc-diff": ["./src/index.js"],
+      // For browsers
+      "readthedocs-doc-diff": ["./src/script.js"],
+      // Library for import
+      "doc-diff": ["./src/extension.js"],
     },
     output: {
       filename: "[name].js?[fullhash]",
