@@ -27,12 +27,12 @@ commands:
 jobs:
   checks:
     docker:
-      - image: "cimg/node:14.20"
+      - image: "cimg/node:18.15"
     steps:
       - run-checks: {}
   build:
     docker:
-      - image: "cimg/node:14.20"
+      - image: "cimg/node:18.15"
     steps:
       - run-build: {}
 
