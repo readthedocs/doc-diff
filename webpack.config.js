@@ -7,12 +7,20 @@ module.exports = (env, argv) => {
 
   return {
     entry: {
-      "readthedocs-doc-diff": ["./src/index.js"],
+      // For browsers
+      "readthedocs-doc-diff": ["./src/script.js"],
+      // Library for import
+      "doc-diff": ["./src/extension.js"],
     },
     output: {
       filename: "[name].js?[fullhash]",
       chunkFilename: "[name].js?[chunkhash]",
       path: path.join(__dirname, "dist"),
+      library: {
+        name: "doc_diff",
+        type: "umd",
+      },
+      globalObject: "this",
     },
     optimization: {
       minimize: is_production,
